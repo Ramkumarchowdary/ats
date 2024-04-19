@@ -1,5 +1,6 @@
 // HomeComponent.jsx
 import React, { useState, useEffect } from "react";
+import LoadingComponent from "./LoadingComponent";
 
 const HomeComponent = () => {
   const [userLocation, setUserLocation] = useState(null);
@@ -30,8 +31,8 @@ const HomeComponent = () => {
   }, []);
 
   const fetchNearbyHospitals = (latitude, longitude) => {
-    // Replace the API endpoint with the actual endpoint for fetching nearby hospitals
-    fetch(`https://api.example.com/hospitals?latitude=${latitude}&longitude=${longitude}`)
+    // fetch(`https://api.example.com/hospitals?latitude=${latitude}&longitude=${longitude}`)
+    fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5000&type=hospital&key=610530713814-c4tq1rn8mnf1i6d0ji4eu52tkf9etr5h.apps.googleusercontent.com`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch nearby hospitals.");
@@ -51,7 +52,7 @@ const HomeComponent = () => {
 
   return (
     <div>
-      {loading && <p>Loading...</p>}
+      {loading && <LoadingComponent/>}
       {error && <p>{error}</p>}
 
       {userLocation && (
